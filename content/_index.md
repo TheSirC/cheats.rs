@@ -2759,36 +2759,6 @@ unsafe fn unsafe_f(x: *mut u8) {
 ```
 </div></div></div></div></div>
 
-
-<!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-unsafe-2" name="tab-unsafe" >
-<label class="tab-label" for="tab-unsafe-2"><b>Undefine Behavior</b></label>
-<div class="tab-panel">
-<div class="tab-content">
-
-**Undefined Behavior (UB)**
-- As mentioned, `unsafe` code implies [special promises](https://doc.rust-lang.org/stable/reference/behavior-considered-undefined.html) to the compiler (it wouldn't need be `unsafe` otherwise).
-- Failure to uphold any promise makes compiler produce fallacious code, execution of which leads to UB.
-- After triggering undefined behavior _anything_ can happen. Insidiously, the effects may be 1) subtle, 2) manifest far away from the site of violation or 3) be visible only under certain conditions.
-- A seemingly _working_ program (incl. any number of unit tests) is no proof UB code might not fail on a whim.
-- Code with UB is objectively dangerous, invalid and should never exist.
-
-<div style="overflow:auto;">
-<div style="min-width: 100%; width: 650px;">
-
-
-```rust
-if maybe_true() {
-   let r: &u8 = unsafe { &*ptr::null() };    // Once this runs, ENTIRE app is undefined. Even if
-} else {                                     // line seemingly didn't do anything, app might now run
-    println!("the spanish inquisition");     // both paths, corrupt database, or anything else.
-}
-```
-</div></div></div></div></div>
-
-
-
 <!-- NEW TAB -->
 <div class="tab">
 <input class="tab-radio" type="radio" id="tab-unsafe-3" name="tab-unsafe" >
@@ -2810,6 +2780,33 @@ fn unsound_ref<T>(x: &T) -> &u128 {      // Signature looks safe to users. Happe
 }                                        // everything else.
 ```
 
+</div></div></div></div></div>
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-unsafe-2" name="tab-unsafe" >
+<label class="tab-label" for="tab-unsafe-2"><b>Undefined Behavior</b></label>
+<div class="tab-panel">
+<div class="tab-content">
+
+**Undefined Behavior (UB)**
+- As mentioned, `unsafe` code implies [special promises](https://doc.rust-lang.org/stable/reference/behavior-considered-undefined.html) to the compiler (it wouldn't need be `unsafe` otherwise).
+- Failure to uphold any promise makes compiler produce fallacious code, execution of which leads to UB.
+- After triggering undefined behavior _anything_ can happen. Insidiously, the effects may be 1) subtle, 2) manifest far away from the site of violation or 3) be visible only under certain conditions.
+- A seemingly _working_ program (incl. any number of unit tests) is no proof UB code might not fail on a whim.
+- Code with UB is objectively dangerous, invalid and should never exist.
+
+<div style="overflow:auto;">
+<div style="min-width: 100%; width: 650px;">
+
+
+```rust
+if maybe_true() {
+   let r: &u8 = unsafe { &*ptr::null() };    // Once this runs, ENTIRE app is undefined. Even if
+} else {                                     // line seemingly didn't do anything, app might now run
+    println!("the spanish inquisition");     // both paths, corrupt database, or anything else.
+}
+```
 </div></div></div></div></div>
 
 </div>
